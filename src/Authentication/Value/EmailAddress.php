@@ -10,25 +10,26 @@ final class EmailAddress
     private $emailAddress;
 
     // constructor
-    /**
-     * EmailAddress constructor.
-     *
-     * @param $emailAddress
-     *
-     * @throws \Exception
-     */
-    public function __construct(string $emailAddress)
+    private function __construct()
     {
-        if(filter_var($emailAddress, \FILTER_VALIDATE_EMAIL) === false) {
-            throw new \Exception("Invalid email address");
+    }
+
+    public static function fromString(string $string): self
+    {
+        if (filter_var($string, \FILTER_VALIDATE_EMAIL) === false) {
+            throw new \InvalidArgumentException("Invalid email address");
         }
-        $this->emailAddress = $emailAddress;
+
+        $instance = new self();
+        $instance->emailAddress = $string;
+
+        return $instance;
     }
 
     // interactions
 
     // maybe cast back to primitives
-    public function getValue() : string
+    public function toString(): string
     {
         return $this->emailAddress;
     }

@@ -3,7 +3,6 @@
 namespace Authentication\Entity;
 
 use Authentication\Value\EmailAddress;
-use Authentication\Value\Password;
 use Authentication\Value\PasswordHash;
 
 class User
@@ -18,11 +17,11 @@ class User
      * User constructor.
      *
      * @param EmailAddress $emailAddress
-     * @param Password     $password
+     * @param PasswordHash $passwordHash
      */
-    public function __construct(EmailAddress $emailAddress, Password $password)
+    public function __construct(EmailAddress $emailAddress, PasswordHash $passwordHash)
     {
         $this->emailAddress = $emailAddress;
-        $this->passwordHash = new PasswordHash(password_hash($password->getValue(), \PASSWORD_DEFAULT));
+        $this->passwordHash = $passwordHash;
     }
 }

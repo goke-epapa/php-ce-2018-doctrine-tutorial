@@ -26,12 +26,12 @@ final class JsonFileUsers implements Users
      */
     public function isRegistered(EmailAddress $emailAddress): bool
     {
-        return isset($this->existingUsers()[$emailAddress->getValue()]);
+        return isset($this->existingUsers()[$emailAddress->toString()]);
     }
 
     public function get(EmailAddress $emailAddress): User
     {
-        $passwordHash = $this->existingUsers()[$emailAddress->getValue()] ?? null;
+        $passwordHash = $this->existingUsers()[$emailAddress->toString()] ?? null;
 
         if (null === $passwordHash) {
             throw new \Exception(sprintf('User %s does not exist', $emailAddress));
@@ -41,7 +41,7 @@ final class JsonFileUsers implements Users
             ->newInstanceWithoutConstructor();
 
         $user->emailAddress = $emailAddress;
-        $user->passwordHash = new PasswordHash($passwordHash);
+        $user->passwordHash = PasswordHash::fromString($passwordHash);
 
         return $user;
     }
@@ -50,7 +50,7 @@ final class JsonFileUsers implements Users
     {
         $users = $this->existingUsers();
 
-        $users[$user->emailAddress->getValue()] = $user->passwordHash->getValue();
+        $users[$user->emailAddress->toString()] = $user->passwordHash->toString();
 
         file_put_contents($this->file, json_encode($users));
     }

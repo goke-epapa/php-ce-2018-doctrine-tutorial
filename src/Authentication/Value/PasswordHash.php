@@ -9,29 +9,26 @@ final class PasswordHash
     /**
      * @var string
      */
-    private $value;
+    private $hash;
 
-    /**
-     * PasswordHash constructor.
-     *
-     * @param $value
-     */
-    public function __construct($value)
+    public function __construct()
     {
-        $this->value = $value;
     }
 
-    public function verify(Password $password): bool
+    public static function fromString(string $string): self
     {
-        return password_verify($password->getValue(), $this->value);
+        $instance = new self();
+        $instance->hash = $string;
+
+        return $instance;
     }
 
     /**
      * @return string
      */
-    public function getValue(): string
+    public function toString(): string
     {
-        return $this->value;
+        return $this->hash;
     }
 
 }

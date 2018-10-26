@@ -3,7 +3,7 @@
 namespace Application;
 
 use Authentication\Value\EmailAddress;
-use Authentication\Value\Password;
+use Authentication\Value\ClearTextPassword;
 use Infrastructure\Authentication\Repository\JsonFileUsers;
 
 require_once __DIR__ . '/../vendor/autoload.php';
@@ -13,8 +13,8 @@ $existingUsers = new JsonFileUsers(__DIR__ . '/../data/users.json');
 $email = $_POST['emailAddress'];
 $password = $_POST['password'];
 
-$emailValueObject = new EmailAddress($email);
-$passwordValue = new Password($password);
+$emailValueObject = EmailAddress::fromString($email);
+$passwordValue = ClearTextPassword::fromString($password);
 
 if (!$existingUsers->isRegistered($emailValueObject)) {
     echo 'Nope';
@@ -24,7 +24,7 @@ if (!$existingUsers->isRegistered($emailValueObject)) {
 
 $user = $existingUsers->get($emailValueObject);
 
-if (!$user->passwordHash->verify($passwordValue)) {
+if (!$passwordValue->verify($user->passwordHash)) {
     echo 'Nope';
 
     return;
