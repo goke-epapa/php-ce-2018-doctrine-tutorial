@@ -2,7 +2,7 @@
 
 namespace Authentication\Security;
 
-interface PasswordEncryptor
+interface PasswordEncryptionInterface
 {
     public function encrypt(string $password) : string;
     public function validate(string $password, string $hash) : bool;

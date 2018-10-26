@@ -4,9 +4,9 @@ namespace Authentication\Transformer;
 
 use Authentication\Entity\User;
 use Authentication\Request\RegisterRequest;
-use Authentication\Security\PasswordEncryptor;
+use Authentication\Security\PasswordEncryptionInterface;
 
-class UserRequestTransformer implements Transformer
+class UserRequestTransformer implements TransformerInterface
 {
     /**
      * @var RegisterRequest
@@ -14,17 +14,17 @@ class UserRequestTransformer implements Transformer
     private $registerRequest;
 
     /**
-     * @var PasswordEncryptor
+     * @var PasswordEncryptionInterface
      */
     private $passwordEncryptor;
 
     /**
      * UserRequestTransformer constructor.
      *
-     * @param RegisterRequest   $userRequest
-     * @param PasswordEncryptor $passwordEncryptor
+     * @param RegisterRequest             $userRequest
+     * @param PasswordEncryptionInterface $passwordEncryptor
      */
-    public function __construct(RegisterRequest $userRequest, PasswordEncryptor $passwordEncryptor)
+    public function __construct(RegisterRequest $userRequest, PasswordEncryptionInterface $passwordEncryptor)
     {
         $this->registerRequest = $userRequest;
         $this->passwordEncryptor = $passwordEncryptor;

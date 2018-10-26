@@ -2,7 +2,7 @@
 
 namespace Authentication\Security;
 
-class PhpPasswordEncryptor implements PasswordEncryptor
+class PhpPasswordEncryption implements PasswordEncryptionInterface
 {
 
     public function encrypt(string $password): string

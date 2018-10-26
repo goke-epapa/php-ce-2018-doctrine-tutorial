@@ -1,6 +1,6 @@
 <?php
 
-namespace Authentication\Repository;
+namespace Authentication\Repository\Exception;
 
 class NotFoundException extends \Exception
 {

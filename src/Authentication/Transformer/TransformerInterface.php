@@ -2,7 +2,7 @@
 
 namespace Authentication\Transformer;
 
-interface Transformer
+interface TransformerInterface
 {
     public function toEntity();
 }
